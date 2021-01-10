@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">whee4</string>
+    <string name="chat_fragment">CHAT FRAGMENT</string>
+    <string name="found_fragment">FOUND FRAGMENT</string>
+    <string name="lost_fragment">LOST FRAGMENT</string>
+    <string name="user_fragment">USER FRAGMENT</string>
+    <string name="found_menu">Found</string>
+    <string name="lost_menu">Lost</string>
+    <string name="chat_menu">Chat</string>
+    <string name="user_menu">User</string>
 </resources>

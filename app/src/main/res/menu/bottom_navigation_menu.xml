@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/navigation_found"
+        android:icon="@drawable/ic_found"
+        android:title="@string/found_menu"/>
+    <item android:id="@+id/navigation_lost"
+        android:icon="@drawable/ic_lost"
+        android:title="@string/lost_menu"/>
+    <item android:id="@+id/navigation_chat"
+        android:icon="@drawable/ic_convo"
+        android:title="@string/chat_menu"/>
+    <item android:id="@+id/navigation_user"
+        android:icon="@drawable/ic_user"
+        android:title="@string/user_menu"/>
+</menu>

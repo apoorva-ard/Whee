@@ -7,7 +7,6 @@ public class Member {
     private String branch;
     private String phone;
 
-
     public String getName() {
         return name;
     }
