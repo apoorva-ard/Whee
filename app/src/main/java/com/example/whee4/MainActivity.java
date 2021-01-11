@@ -1,6 +1,5 @@
 package com.example.whee4;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -15,10 +14,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
-    EditText varname,varemail,varphone,varpassword,varbranch;
-    Button btnsignup;
     DatabaseReference reff;
-    Member member;
+    //Member member;
+
     BottomNavigationView bottomNavigationView;
     Found foundfrag = new Found();
     Lost lostFrag = new Lost();
@@ -36,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     }
 
-    public void register(){
+    /*public void register(){
         varname=(EditText)findViewById(R.id.name);
         varemail=(EditText)findViewById(R.id.email);
         varphone=(EditText)findViewById(R.id.phone);
@@ -60,10 +58,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 Toast.makeText(MainActivity.this,"User Registered",Toast.LENGTH_LONG).show();
             }
         });
-    }
+    }*/
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+    public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.navigation_found:
                 getSupportFragmentManager().beginTransaction().replace(R.id.menu_container, foundfrag).commit();
