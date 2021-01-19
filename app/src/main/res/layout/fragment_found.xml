@@ -1,17 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/found_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/found_fragment"
-    tools:context=".Found">
+    android:visibility="visible"
+    tools:context=".Found"
+    tools:visibility="visible">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/found_fragment"
-        android:textAllCaps="true"
-        android:textSize="50sp"/>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="36dp"
+            android:src="@drawable/ic_baseline_add_24"
+            app:backgroundTint="@color/purple_500" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </FrameLayout>
