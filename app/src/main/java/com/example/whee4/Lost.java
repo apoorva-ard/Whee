@@ -17,7 +17,6 @@ public class Lost extends Fragment {
     FloatingActionButton fab;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_lost, container, false);
         fab=(FloatingActionButton)view.findViewById(R.id.fab2);
         fab.setOnClickListener(
@@ -25,8 +24,8 @@ public class Lost extends Fragment {
                     @Override
                     public void onClick(View view) {
 
-                        Intent activity2Intent = new Intent(getActivity(), LostFound.class);
-                        startActivity(activity2Intent);
+                        Intent touploadlost = new Intent(getActivity(), UploadLost.class);
+                        startActivity(touploadlost);
                     }
                 }
         );

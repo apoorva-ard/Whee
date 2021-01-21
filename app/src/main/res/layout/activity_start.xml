@@ -8,9 +8,9 @@
 
     <Button
         android:id="@+id/registerbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="260dp"
+        android:layout_width="175dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="200dp"
         android:text="Register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -19,8 +19,8 @@
 
     <Button
         android:id="@+id/loginbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="175dp"
+        android:layout_height="70dp"
         android:layout_marginTop="76dp"
         android:text="Login"
         app:layout_constraintEnd_toEndOf="parent"

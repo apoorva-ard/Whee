@@ -34,32 +34,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     }
 
-    /*public void register(){
-        varname=(EditText)findViewById(R.id.name);
-        varemail=(EditText)findViewById(R.id.email);
-        varphone=(EditText)findViewById(R.id.phone);
-        varbranch=(EditText)findViewById(R.id.branch);
-        varpassword=(EditText)findViewById(R.id.password);
-        btnsignup=(Button)findViewById(R.id.signUpButton);
-
-        member= new Member();
-        reff= FirebaseDatabase.getInstance().getReference().child("Member");
-
-        btnsignup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                member.setName(varname.getText().toString());
-                member.setEmail(varemail.getText().toString());
-                member.setPhone(varphone.getText().toString());
-                member.setBranch(varbranch.getText().toString());
-                member.setPassword(varpassword.getText().toString());
-
-                reff.push().setValue(member);
-                Toast.makeText(MainActivity.this,"User Registered",Toast.LENGTH_LONG).show();
-            }
-        });
-    }*/
-
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()){

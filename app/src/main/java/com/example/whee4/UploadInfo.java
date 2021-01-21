@@ -1,14 +1,14 @@
 package com.example.whee4;
 
-public class UploadFinfo {
+public class UploadInfo {
     public String imageName;
     public String Fplace;
     public String Fdate;
     public String Fdetails;
     public String imageURL;
-    public UploadFinfo(){}
+    public UploadInfo(){}
 
-    public UploadFinfo(String name, String place,String date,String Details,String url) {
+    public UploadInfo(String name, String place, String date, String Details, String url) {
         this.imageName = name;
         this.Fplace=place;
         this.Fdate=date;

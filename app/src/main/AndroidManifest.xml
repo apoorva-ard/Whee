@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Whee4">
         <activity android:name=".UploadFound"></activity>
-        <activity android:name=".LostFound" />
+        <activity android:name=".UploadLost"></activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".StartActivity">
             <intent-filter>

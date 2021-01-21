@@ -16,21 +16,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class Found extends Fragment {
 
     View view;
-    Button button;
     FloatingActionButton fab;
-
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_found, container, false);
-
-        //example -- should use view.
-        //button = (Button)view.findViewById(R.id.);
-
-        //TODO: found module java implementation
-
         fab=(FloatingActionButton)view.findViewById(R.id.fab1);
         fab.setOnClickListener(
                 new View.OnClickListener() {

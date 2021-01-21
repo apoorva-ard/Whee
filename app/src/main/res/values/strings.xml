@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">whee4</string>
+    <string name="app_name">Whee</string>
     <string name="chat_fragment">CHAT FRAGMENT</string>
     <string name="found_fragment">FOUND FRAGMENT</string>
     <string name="lost_fragment">LOST FRAGMENT</string>

@@ -1,28 +1,27 @@
 package com.example.whee4;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
-
 import android.Manifest;
 import android.app.Activity;
-import android.content.pm.PackageManager;
-import android.os.Bundle;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -37,7 +36,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class UploadFound extends AppCompatActivity {
+public class UploadLost extends AppCompatActivity {
    FloatingActionButton btnbrowse, btnupload,btncamera;
     EditText iname,fplace,fdate,fdetails ;
     ImageView imgview;
@@ -52,9 +51,9 @@ public class UploadFound extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_upload_found);
+        setContentView(R.layout.activity_upload_lost);
         storageReference = FirebaseStorage.getInstance().getReference("Images");
-        databaseReference = FirebaseDatabase.getInstance().getReference("Found");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Lost");
         btnbrowse = (FloatingActionButton) findViewById(R.id.btnbrowse);
         btnupload= (FloatingActionButton) findViewById(R.id.btnupload);
         btncamera=(FloatingActionButton) findViewById(R.id.btncamera);
@@ -63,7 +62,7 @@ public class UploadFound extends AppCompatActivity {
         fdate = (EditText)findViewById(R.id.fdate);
         fdetails = (EditText)findViewById(R.id.fdetails);
         imgview = (ImageView)findViewById(R.id.image_view);
-        progressDialog = new ProgressDialog(UploadFound.this);// context name as per your project name
+        progressDialog = new ProgressDialog(UploadLost.this);// context name as per your project name
 
 
         btnbrowse.setOnClickListener(new View.OnClickListener() {
@@ -84,10 +83,7 @@ public class UploadFound extends AppCompatActivity {
         btnupload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-/*nive*/
                 UploadImage();
-
             }
         });
 
@@ -206,7 +202,7 @@ public class UploadFound extends AppCompatActivity {
         }
         else {
 
-            Toast.makeText(UploadFound.this, "Please Select Image or Add Image Name", Toast.LENGTH_LONG).show();
+            Toast.makeText(UploadLost.this, "Please Select Image or Add Image Name", Toast.LENGTH_LONG).show();
 
         }
     }
