@@ -18,6 +18,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
@@ -49,6 +50,8 @@ public class UploadFound extends AppCompatActivity {
     private static final int CAMERA_REQUEST_CODE = 102;
     public static final int CAMERA_PERM_CODE = 101;
     String currentPhotoPath;
+    File file;
+    Activity activity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +88,6 @@ public class UploadFound extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-/*nive*/
                 UploadImage();
 
             }
@@ -106,6 +108,8 @@ public class UploadFound extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if(requestCode == CAMERA_PERM_CODE){
             if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+             //   Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
+
                 dispatchTakePictureIntent();
             }else {
                 Toast.makeText(this, "Camera Permission is Required to Use camera.", Toast.LENGTH_SHORT).show();
@@ -133,18 +137,19 @@ public class UploadFound extends AppCompatActivity {
         }
         if(requestCode == CAMERA_REQUEST_CODE){
             if(resultCode == Activity.RESULT_OK){
-                File f = new File(currentPhotoPath);
+               File f = new File(currentPhotoPath);
                 imgview.setImageURI(Uri.fromFile(f));
-
 
                 Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
                 FilePathUri = Uri.fromFile(f);
                 mediaScanIntent.setData(FilePathUri);
                 this.sendBroadcast(mediaScanIntent);
+
+
+
             }
 
         }
-
 
     }
     private void dispatchTakePictureIntent() {
@@ -159,8 +164,9 @@ public class UploadFound extends AppCompatActivity {
 
             }
             // Continue only if the File was successfully created
-            if (photoFile!= null) {
-            //    Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
+            if (photoFile != null) {
+                //Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
+
                 Uri photoURI = FileProvider.getUriForFile(this,
                         "com.example.android.fileprovider",
                         photoFile);
@@ -210,22 +216,20 @@ public class UploadFound extends AppCompatActivity {
 
         }
     }
-    private File createImageFile() throws IOException {
-        // Create an image file name
+   private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-      //  File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-       File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+     File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+//        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
+                imageFileName,
+                ".jpg",
+                storageDir
         );
 
         // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.getAbsolutePath();
         return image;
     }
-
 
 }
