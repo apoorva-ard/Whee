@@ -2,6 +2,7 @@ package com.example.whee4;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -34,6 +36,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class UploadLost extends AppCompatActivity {
@@ -48,6 +51,8 @@ public class UploadLost extends AppCompatActivity {
     private static final int CAMERA_REQUEST_CODE = 102;
     public static final int CAMERA_PERM_CODE = 101;
     String currentPhotoPath;
+    private int mYear,mMonth,mDay;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +67,30 @@ public class UploadLost extends AppCompatActivity {
         fdate = (EditText)findViewById(R.id.fdate);
         fdetails = (EditText)findViewById(R.id.fdetails);
         imgview = (ImageView)findViewById(R.id.image_view);
-        progressDialog = new ProgressDialog(UploadLost.this);// context name as per your project name
+        progressDialog = new ProgressDialog(UploadLost.this);
+
+        fdate.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                final Calendar c = Calendar.getInstance();
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dpd = new DatePickerDialog(UploadLost.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int month, int day) {
+                                fdate.setText(day + "/"
+                                        + (month + 1) + "/" + year);
+                            }
+                        }, mYear, mMonth, mDay);
+                dpd.getDatePicker().setMaxDate(System.currentTimeMillis());
+                dpd.show();
+
+            }
+        });
 
 
         btnbrowse.setOnClickListener(new View.OnClickListener() {
@@ -83,7 +111,7 @@ public class UploadLost extends AppCompatActivity {
         btnupload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UploadImage();
+                uploadItem();
             }
         });
 
@@ -123,7 +151,6 @@ public class UploadLost extends AppCompatActivity {
                 imgview.setImageBitmap(bitmap);
             }
             catch (IOException e) {
-
                 e.printStackTrace();
             }
         }
@@ -145,10 +172,8 @@ public class UploadLost extends AppCompatActivity {
     }
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
-            // Create the File where the photo should go
             File photoFile = null;
             try {
                 photoFile = createImageFile();
@@ -156,10 +181,8 @@ public class UploadLost extends AppCompatActivity {
 
             }
             Toast.makeText(getApplicationContext(), "Image ", Toast.LENGTH_LONG).show();
-            // Continue only if the File was successfully created
             if (photoFile!= null) {
                 Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
-            //    Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
                 Uri photoURI = FileProvider.getUriForFile(this,
                         "com.example.android.fileprovider",
                         photoFile);
@@ -177,11 +200,18 @@ public class UploadLost extends AppCompatActivity {
 
     }
 
+    public void uploadItem() {
+        String itemName = iname.getText().toString().trim();
+        String itemPlace = fplace.getText().toString().trim();
+        String itemDate = fdate.getText().toString().trim();
+        String itemDetails = fdetails.getText().toString().trim();
 
-    public void UploadImage() {
+        if(itemName.length()==0 || itemPlace.length()==0 || itemDetails.length()==0  || itemDate.length()==0){
+            Toast.makeText(getApplicationContext(), "Fields can't be empty!", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         if (FilePathUri != null) {
-
             progressDialog.setTitle("Image is Uploading...");
             progressDialog.show();
             StorageReference storageReference2 = storageReference.child(System.currentTimeMillis() + "." + GetFileExtension(FilePathUri));
@@ -189,42 +219,38 @@ public class UploadLost extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                            String TempImageName = iname.getText().toString().trim();
-                            String TempImagePlace = fplace.getText().toString().trim();
-                            String TempImageDate = fdate.getText().toString().trim();
-                            String TempImageDetails = fdetails.getText().toString().trim();
                             progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
-                            @SuppressWarnings("VisibleForTests")
-                            UploadInfo imageUploadInfo = new UploadInfo(TempImageName,TempImagePlace,TempImageDate,TempImageDetails, taskSnapshot.getUploadSessionUri().toString());
+                            UploadInfo imageUploadInfo = new UploadInfo(itemName,itemPlace,itemDate,itemDetails, taskSnapshot.getUploadSessionUri().toString());
                             String ImageUploadId = databaseReference.push().getKey();
                             databaseReference.child(ImageUploadId).setValue(imageUploadInfo);
                         }
                     });
         }
         else {
-
-            Toast.makeText(UploadLost.this, "Please Select Image or Add Image Name", Toast.LENGTH_LONG).show();
-
+            String imageUrl="https://firebasestorage.googleapis.com/v0/b/whee-c564b.appspot.com/o/Images%2Fpicture.png?alt=media&token=466de9c8-6cad-4683-9b97-335a684a40fd";
+            UploadInfo imageUploadInfo = new UploadInfo(itemName,itemPlace,itemDate,itemDetails, imageUrl);
+            String itemUploadId = databaseReference.push().getKey();
+            databaseReference.child(itemUploadId).setValue(imageUploadInfo);
         }
+        Toast.makeText(getApplicationContext(), "Item Uploaded Successfully ", Toast.LENGTH_LONG).show();
+        iname.setText("");
+        fplace.setText("");
+        fdate.setText("");
+        fdetails.setText("");
+        imgview.setImageResource(android.R.color.transparent);
     }
+
+
     private File createImageFile() throws IOException {
-        // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-       //File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
+                imageFileName,
+                ".jpg",
+                storageDir
         );
-
-        // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.getAbsolutePath();
         return image;
     }
-
-
 }

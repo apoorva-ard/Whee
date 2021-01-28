@@ -8,6 +8,7 @@ import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.app.ProgressDialog;
@@ -21,6 +22,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -36,6 +38,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class UploadFound extends AppCompatActivity {
@@ -50,6 +53,7 @@ public class UploadFound extends AppCompatActivity {
     private static final int CAMERA_REQUEST_CODE = 102;
     public static final int CAMERA_PERM_CODE = 101;
     String currentPhotoPath;
+    private int mYear,mMonth,mDay;
     File file;
     Activity activity;
     @Override
@@ -66,7 +70,31 @@ public class UploadFound extends AppCompatActivity {
         fdate = (EditText)findViewById(R.id.fdate);
         fdetails = (EditText)findViewById(R.id.fdetails);
         imgview = (ImageView)findViewById(R.id.image_view);
-        progressDialog = new ProgressDialog(UploadFound.this);// context name as per your project name
+        progressDialog = new ProgressDialog(UploadFound.this);
+
+
+        fdate.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                final Calendar c = Calendar.getInstance();
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dpd = new DatePickerDialog(UploadFound.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int month, int day) {
+                                fdate.setText(day + "/"
+                                        + (month + 1) + "/" + year);
+                            }
+                        }, mYear, mMonth, mDay);
+                dpd.getDatePicker().setMaxDate(System.currentTimeMillis());
+                dpd.show();
+
+            }
+        });
 
 
         btnbrowse.setOnClickListener(new View.OnClickListener() {
@@ -74,22 +102,18 @@ public class UploadFound extends AppCompatActivity {
             public void onClick(View view) {
                 Intent gallery = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(gallery, Image_Request_Code);
-
             }
         });
         btncamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            askCameraPermission();
-
+                askCameraPermission();
             }
         });
         btnupload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                UploadImage();
-
+                uploadItem();
             }
         });
 
@@ -108,8 +132,6 @@ public class UploadFound extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if(requestCode == CAMERA_PERM_CODE){
             if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-             //   Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
-
                 dispatchTakePictureIntent();
             }else {
                 Toast.makeText(this, "Camera Permission is Required to Use camera.", Toast.LENGTH_SHORT).show();
@@ -131,7 +153,6 @@ public class UploadFound extends AppCompatActivity {
                 imgview.setImageBitmap(bitmap);
             }
             catch (IOException e) {
-
                 e.printStackTrace();
             }
         }
@@ -144,29 +165,19 @@ public class UploadFound extends AppCompatActivity {
                 FilePathUri = Uri.fromFile(f);
                 mediaScanIntent.setData(FilePathUri);
                 this.sendBroadcast(mediaScanIntent);
-
-
-
             }
-
         }
-
     }
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
             File photoFile = null;
             try {
                 photoFile = createImageFile();
             } catch (IOException ex) {
 
             }
-            // Continue only if the File was successfully created
             if (photoFile != null) {
-                //Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
-
                 Uri photoURI = FileProvider.getUriForFile(this,
                         "com.example.android.fileprovider",
                         photoFile);
@@ -177,18 +188,24 @@ public class UploadFound extends AppCompatActivity {
     }
 
     public String GetFileExtension(Uri uri) {
-
         ContentResolver contentResolver = getContentResolver();
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri)) ;
-
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
 
-    public void UploadImage() {
+    public void uploadItem() {
+        String itemName = iname.getText().toString().trim();
+        String itemPlace = fplace.getText().toString().trim();
+        String itemDate = fdate.getText().toString().trim();
+        String itemDetails = fdetails.getText().toString().trim();
+
+        if(itemName.length()==0 || itemPlace.length()==0 || itemDetails.length()==0 || itemDate.length()==0){
+            Toast.makeText(getApplicationContext(), "Fields can't be empty!", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         if (FilePathUri != null) {
-
             progressDialog.setTitle("Image is Uploading...");
             progressDialog.show();
             StorageReference storageReference2 = storageReference.child(System.currentTimeMillis() + "." + GetFileExtension(FilePathUri));
@@ -196,38 +213,36 @@ public class UploadFound extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                            String TempImageName = iname.getText().toString().trim();
-                            String TempImagePlace = fplace.getText().toString().trim();
-                            String TempImageDate = fdate.getText().toString().trim();
-                            String TempImageDetails = fdetails.getText().toString().trim();
                             progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
-                            @SuppressWarnings("VisibleForTests")
-                            UploadInfo imageUploadInfo = new UploadInfo(TempImageName,TempImagePlace,TempImageDate,TempImageDetails, taskSnapshot.getUploadSessionUri().toString());
+                            UploadInfo imageUploadInfo = new UploadInfo(itemName,itemPlace,itemDate,itemDetails, taskSnapshot.getUploadSessionUri().toString());
                             String ImageUploadId = databaseReference.push().getKey();
                             databaseReference.child(ImageUploadId).setValue(imageUploadInfo);
                         }
                     });
         }
         else {
-
-            Toast.makeText(UploadFound.this, "Please Select Image or Add Image Name", Toast.LENGTH_LONG).show();
-
+            String imageUrl="https://firebasestorage.googleapis.com/v0/b/whee-c564b.appspot.com/o/Images%2Fpicture.png?alt=media&token=466de9c8-6cad-4683-9b97-335a684a40fd";
+            UploadInfo imageUploadInfo = new UploadInfo(itemName,itemPlace,itemDate,itemDetails, imageUrl);
+            String itemUploadId = databaseReference.push().getKey();
+            databaseReference.child(itemUploadId).setValue(imageUploadInfo);
         }
+        Toast.makeText(getApplicationContext(), "Item Uploaded Successfully ", Toast.LENGTH_LONG).show();
+        iname.setText("");
+        fplace.setText("");
+        fdate.setText("");
+        fdetails.setText("");
+        imgview.setImageResource(android.R.color.transparent);
     }
+
    private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-     File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-//        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,
                 ".jpg",
                 storageDir
         );
-
-        // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.getAbsolutePath();
         return image;
     }
