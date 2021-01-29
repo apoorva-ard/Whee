@@ -214,9 +214,25 @@ public class UploadFound extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss();
-                            UploadInfo imageUploadInfo = new UploadInfo(itemName,itemPlace,itemDate,itemDetails, taskSnapshot.getUploadSessionUri().toString());
+                            /*UploadInfo imageUploadInfo = new UploadInfo(itemName,itemPlace,itemDate,itemDetails, taskSnapshot.getUploadSessionUri().toString());
                             String ImageUploadId = databaseReference.push().getKey();
-                            databaseReference.child(ImageUploadId).setValue(imageUploadInfo);
+                            databaseReference.child(ImageUploadId).setValue(imageUploadInfo);*/
+                            storageReference2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    String url=uri.toString();
+                                    UploadInfo imageUploadInfo = new UploadInfo(itemName,itemPlace,itemDate,itemDetails, url);
+                                    String ImageUploadId = databaseReference.push().getKey();
+                                    databaseReference.child(ImageUploadId).setValue(imageUploadInfo);
+                                    Toast.makeText(getApplicationContext(), "Item Uploaded Successfully ", Toast.LENGTH_LONG).show();
+                                    iname.setText("");
+                                    fplace.setText("");
+                                    fdate.setText("");
+                                    fdetails.setText("");
+                                    imgview.setImageResource(android.R.color.transparent);
+                                }
+                            });
+
                         }
                     });
         }
@@ -225,13 +241,15 @@ public class UploadFound extends AppCompatActivity {
             UploadInfo imageUploadInfo = new UploadInfo(itemName,itemPlace,itemDate,itemDetails, imageUrl);
             String itemUploadId = databaseReference.push().getKey();
             databaseReference.child(itemUploadId).setValue(imageUploadInfo);
+            Toast.makeText(getApplicationContext(), "Item Uploaded Successfully ", Toast.LENGTH_LONG).show();
+            iname.setText("");
+            fplace.setText("");
+            fdate.setText("");
+            fdetails.setText("");
+            imgview.setImageResource(android.R.color.transparent);
         }
-        Toast.makeText(getApplicationContext(), "Item Uploaded Successfully ", Toast.LENGTH_LONG).show();
-        iname.setText("");
-        fplace.setText("");
-        fdate.setText("");
-        fdetails.setText("");
-        imgview.setImageResource(android.R.color.transparent);
+
+
     }
 
    private File createImageFile() throws IOException {
