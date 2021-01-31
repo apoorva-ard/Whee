@@ -29,6 +29,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -54,8 +56,7 @@ public class UploadFound extends AppCompatActivity {
     public static final int CAMERA_PERM_CODE = 101;
     String currentPhotoPath;
     private int mYear,mMonth,mDay;
-    File file;
-    Activity activity;
+    FirebaseUser user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +72,7 @@ public class UploadFound extends AppCompatActivity {
         fdetails = (EditText)findViewById(R.id.fdetails);
         imgview = (ImageView)findViewById(R.id.image_view);
         progressDialog = new ProgressDialog(UploadFound.this);
-
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
         fdate.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -86,8 +87,8 @@ public class UploadFound extends AppCompatActivity {
                             @Override
                             public void onDateSet(DatePicker view, int year,
                                                   int month, int day) {
-                                fdate.setText(day + "/"
-                                        + (month + 1) + "/" + year);
+                                String temp=day + "/" + (month + 1) + "/" + year;
+                                fdate.setText(temp);
                             }
                         }, mYear, mMonth, mDay);
                 dpd.getDatePicker().setMaxDate(System.currentTimeMillis());
@@ -199,6 +200,7 @@ public class UploadFound extends AppCompatActivity {
         String itemPlace = fplace.getText().toString().trim();
         String itemDate = fdate.getText().toString().trim();
         String itemDetails = fdetails.getText().toString().trim();
+        String userId = user.getUid();
 
         if(itemName.length()==0 || itemPlace.length()==0 || itemDetails.length()==0 || itemDate.length()==0){
             Toast.makeText(getApplicationContext(), "Fields can't be empty!", Toast.LENGTH_LONG).show();
@@ -214,14 +216,12 @@ public class UploadFound extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss();
-                            /*UploadInfo imageUploadInfo = new UploadInfo(itemName,itemPlace,itemDate,itemDetails, taskSnapshot.getUploadSessionUri().toString());
-                            String ImageUploadId = databaseReference.push().getKey();
-                            databaseReference.child(ImageUploadId).setValue(imageUploadInfo);*/
+
                             storageReference2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     String url=uri.toString();
-                                    UploadInfo imageUploadInfo = new UploadInfo(itemName,itemPlace,itemDate,itemDetails, url);
+                                    UploadInfo imageUploadInfo = new UploadInfo(itemName,userId,itemPlace,itemDate,itemDetails, url);
                                     String ImageUploadId = databaseReference.push().getKey();
                                     databaseReference.child(ImageUploadId).setValue(imageUploadInfo);
                                     Toast.makeText(getApplicationContext(), "Item Uploaded Successfully ", Toast.LENGTH_LONG).show();
@@ -238,7 +238,7 @@ public class UploadFound extends AppCompatActivity {
         }
         else {
             String imageUrl="https://firebasestorage.googleapis.com/v0/b/whee-c564b.appspot.com/o/Images%2Fpicture.png?alt=media&token=466de9c8-6cad-4683-9b97-335a684a40fd";
-            UploadInfo imageUploadInfo = new UploadInfo(itemName,itemPlace,itemDate,itemDetails, imageUrl);
+            UploadInfo imageUploadInfo = new UploadInfo(itemName,userId,itemPlace,itemDate,itemDetails, imageUrl);
             String itemUploadId = databaseReference.push().getKey();
             databaseReference.child(itemUploadId).setValue(imageUploadInfo);
             Toast.makeText(getApplicationContext(), "Item Uploaded Successfully ", Toast.LENGTH_LONG).show();

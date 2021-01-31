@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardview1"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     card_view:cardElevation="5dp"
     card_view:contentPadding="5dp"
     card_view:cardCornerRadius="5dp"
-    card_view:cardMaxElevation="5dp"
-    >
+    card_view:cardMaxElevation="5dp">
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -32,8 +31,22 @@
             android:text="JSon Image Name"
             android:gravity="center"
             android:id="@+id/ImageNameTextView"
+            android:layout_alignParentBottom="true" />
+
+        <Button
+            android:id="@+id/send_msg"
+            android:layout_width="75dp"
+            android:layout_height="40dp"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:text="@string/chat"
+            android:layout_marginBottom="5dp"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/teal_200"/>
+
+
 
     </RelativeLayout>
 

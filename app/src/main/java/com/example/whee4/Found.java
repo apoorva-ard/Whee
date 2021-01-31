@@ -74,11 +74,9 @@ public class Found extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-
+                list.clear();
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-
                     UploadInfo imageUploadInfo = postSnapshot.getValue(UploadInfo.class);
-
                     list.add(imageUploadInfo);
                 }
 
@@ -95,7 +93,6 @@ public class Found extends Fragment {
 
                 // Hiding the progress dialog.
                 progressDialog.dismiss();
-
             }
         });
 

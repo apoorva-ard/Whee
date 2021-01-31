@@ -3,10 +3,10 @@
     package="com.example.whee4">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,8 +14,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Whee4">
-        <activity android:name=".UploadFound"></activity>
-        <activity android:name=".UploadLost"></activity>
+        <activity android:name=".MessageActivity"
+            android:theme="@style/MenuStyle"/>
+        <activity android:name=".UploadFound" />
+        <activity android:name=".UploadLost" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".StartActivity">
             <intent-filter>
@@ -26,6 +28,7 @@
         </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.android.fileprovider"
@@ -33,7 +36,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths" />
         </provider>
     </application>
 

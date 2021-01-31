@@ -67,7 +67,7 @@ public class Lost extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-
+                list.clear();
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
 
                     UploadInfo imageUploadInfo = postSnapshot.getValue(UploadInfo.class);
