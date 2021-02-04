@@ -82,6 +82,7 @@ public class Found extends Fragment {
 
                 adapter = new RecyclerViewAdapter(getContext(), list);
 
+
                 recyclerView.setAdapter(adapter);
 
                 // Hiding the progress dialog.

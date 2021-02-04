@@ -3,17 +3,23 @@ package com.example.whee4;
 import android.content.Context;
 
 import android.content.Intent;
+import android.icu.text.Transliterator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -40,9 +46,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         UploadInfo uploadInfo = MainImageUploadInfoList.get(position);
-        holder.imageNameTextView.setText(uploadInfo.getImageName());
-        Glide.with(context).load(uploadInfo.getImageURL()).into(holder.imageView);
 
+        holder.imageNameTextView.setText(uploadInfo.getImageName());
+
+        holder.textplace.setText(uploadInfo.getPlace());
+        holder.textdate.setText(uploadInfo.getDate());
+        holder.textdetails.setText(uploadInfo.getDetails());
+        Glide.with(context).load(uploadInfo.getImageURL()).into(holder.imageView);
+        Glide.with(context).load(uploadInfo.getImageURL()).into(holder.circleimage);
+        boolean isExpandable=MainImageUploadInfoList.get(position).isExpandable();
+       holder.eview.setVisibility(isExpandable?View.VISIBLE:View.GONE);
         holder.chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,15 +79,41 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        public ImageView imageView;
-        public TextView imageNameTextView;
-        public Button chat;
+        public ImageView imageView,circleimage;
+        public TextView imageNameTextView,textplace,textdetails,textdate;
+       public ConstraintLayout eview;
+        Button arrow;
+        public FloatingActionButton chat;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
             imageView = (ImageView) itemView.findViewById(R.id.imageView);
             imageNameTextView = (TextView) itemView.findViewById(R.id.ImageNameTextView);
-            chat = (Button) itemView.findViewById(R.id.send_msg);
+            textplace=(TextView) itemView.findViewById(R.id.TextPlace);
+            textdate=(TextView) itemView.findViewById(R.id.TextDate);
+            eview=(ConstraintLayout) itemView.findViewById(R.id.expandableView) ;
+            textdetails=(TextView) itemView.findViewById(R.id.TextDetails);
+circleimage=(ImageView) itemView.findViewById(R.id.circleImage);
+arrow=(Button) itemView.findViewById(R.id.arrowBtn);
+            chat = (FloatingActionButton) itemView.findViewById(R.id.send_msg);
+
+arrow.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        UploadInfo uploadInfo=MainImageUploadInfoList.get(getAdapterPosition());
+        uploadInfo.setExpandable(!uploadInfo.isExpandable());
+        notifyItemChanged(getAdapterPosition());
+        if(eview.getVisibility()==View.GONE)
+        {
+            arrow.setBackgroundResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
+        }
+        else
+        {
+            arrow.setBackgroundResource(R.drawable.ic_baseline_keyboard_arrow_up_24);
+        }
+    }
+});
         }
     }
 }
