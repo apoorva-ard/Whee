@@ -14,8 +14,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Whee4">
-        <activity android:name=".MessageActivity"
-            android:theme="@style/MenuStyle"/>
+        <activity android:name=".ProfileLogout"></activity>
+        <activity android:name=".ProfileSettings" />
+        <activity android:name=".ProfileLost" />
+        <activity android:name=".FoundActivity" />
+        <activity
+            android:name=".MessageActivity"
+            android:theme="@style/MenuStyle" />
         <activity android:name=".UploadFound" />
         <activity android:name=".UploadLost" />
         <activity android:name=".LoginActivity" />
