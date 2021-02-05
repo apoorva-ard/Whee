@@ -244,7 +244,7 @@ public class UploadLost extends AppCompatActivity {
                     });
         }
         else {
-            String imageUrl="https://firebasestorage.googleapis.com/v0/b/whee-c564b.appspot.com/o/Images%2Fpicture.png?alt=media&token=466de9c8-6cad-4683-9b97-335a684a40fd";
+            String imageUrl="https://firebasestorage.googleapis.com/v0/b/whee-c564b.appspot.com/o/Images%2Fdefault.png?alt=media&token=213d550e-5d70-43b6-968e-0a1f51357be9";
             UploadInfo imageUploadInfo = new UploadInfo(itemName,userId,itemPlace,itemDate,itemDetails, imageUrl);
             String itemUploadId = databaseReference.push().getKey();
             databaseReference.child(itemUploadId).setValue(imageUploadInfo);

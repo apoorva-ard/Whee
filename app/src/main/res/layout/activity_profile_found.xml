@@ -11,7 +11,7 @@
     tools:visibility="visible">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_ul"
+        android:id="@+id/recycler_view_uf"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </androidx.recyclerview.widget.RecyclerView>

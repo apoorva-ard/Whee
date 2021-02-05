@@ -1,14 +1,12 @@
 package com.example.whee4.Adapter;
 import android.content.Context;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.example.whee4.MessageActivity;
 import com.example.whee4.R;
@@ -71,6 +69,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         private TextView last_msg;
 
         public ViewHolder(View itemView) {
+
             super(itemView);
 
             username = itemView.findViewById(R.id.username);

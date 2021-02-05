@@ -7,6 +7,7 @@ public class UploadInfo {
     public String date;
     public String details;
     public String imageURL;
+    public String key;
     private boolean expandable;
     public UploadInfo(){}
 
@@ -69,6 +70,12 @@ public class UploadInfo {
 
     public String getDetails() {
         return details;
+    }
+
+    public String getKey(){ return  key; }
+
+    public void setKey(String key){
+        this.key = key;
     }
 
     @Override

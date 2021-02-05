@@ -45,6 +45,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+
         UploadInfo uploadInfo = MainImageUploadInfoList.get(position);
 
         holder.imageNameTextView.setText(uploadInfo.getImageName());
@@ -55,7 +56,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         Glide.with(context).load(uploadInfo.getImageURL()).into(holder.imageView);
         Glide.with(context).load(uploadInfo.getImageURL()).into(holder.circleimage);
         boolean isExpandable=MainImageUploadInfoList.get(position).isExpandable();
-       holder.eview.setVisibility(isExpandable?View.VISIBLE:View.GONE);
+
+        holder.eview.setVisibility(isExpandable?View.VISIBLE:View.GONE);
+
         holder.chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,9 +84,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public ImageView imageView,circleimage;
         public TextView imageNameTextView,textplace,textdetails,textdate;
-       public ConstraintLayout eview;
-        Button arrow;
-        public FloatingActionButton chat;
+        public ConstraintLayout eview;
+        public Button arrow, chat;
 
 
         public ViewHolder(View itemView) {
@@ -94,26 +96,26 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             textdate=(TextView) itemView.findViewById(R.id.TextDate);
             eview=(ConstraintLayout) itemView.findViewById(R.id.expandableView) ;
             textdetails=(TextView) itemView.findViewById(R.id.TextDetails);
-circleimage=(ImageView) itemView.findViewById(R.id.circleImage);
-arrow=(Button) itemView.findViewById(R.id.arrowBtn);
-            chat = (FloatingActionButton) itemView.findViewById(R.id.send_msg);
+            circleimage=(ImageView) itemView.findViewById(R.id.circleImage);
+            arrow=(Button) itemView.findViewById(R.id.arrowBtn);
+            chat = (Button) itemView.findViewById(R.id.send_msg);
 
-arrow.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        UploadInfo uploadInfo=MainImageUploadInfoList.get(getAdapterPosition());
-        uploadInfo.setExpandable(!uploadInfo.isExpandable());
-        notifyItemChanged(getAdapterPosition());
-        if(eview.getVisibility()==View.GONE)
-        {
-            arrow.setBackgroundResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
-        }
-        else
-        {
-            arrow.setBackgroundResource(R.drawable.ic_baseline_keyboard_arrow_up_24);
-        }
-    }
-});
+            arrow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    UploadInfo uploadInfo=MainImageUploadInfoList.get(getAdapterPosition());
+                    uploadInfo.setExpandable(!uploadInfo.isExpandable());
+                    notifyItemChanged(getAdapterPosition());
+                    if(eview.getVisibility()==View.GONE)
+                    {
+                        arrow.setBackgroundResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
+                    }
+                    else
+                    {
+                        arrow.setBackgroundResource(R.drawable.ic_baseline_keyboard_arrow_up_24);
+                    }
+                }
+            });
         }
     }
 }

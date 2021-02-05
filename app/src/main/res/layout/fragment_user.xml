@@ -1,170 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".User">
 
-    <!-- TODO: Update blank fragment layout -->
-    <?xml version="1.0" encoding="utf-8"?>
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainActivity">
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imageview_profile"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:src="@drawable/muhilprofile"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="60dp"
-            />
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/cameraupload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/imageview_profile"
-            android:layout_alignEnd="@+id/imageview_profile"
-            android:elevation="1dp"
-            android:background="#FFFFFF"
-            android:src="@drawable/ic_camera"
-            android:tint="#FFEB3B"
-            app:backgroundTint="@color/teal_200"
-            app:tint="@color/white"
-            android:layout_alignRight="@+id/imageview_profile" />
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Muhil Varsini Srinivasan"
-            android:textColor="#000"
-            android:layout_below="@+id/imageview_profile"
-            android:layout_centerHorizontal="true"
-            android:textStyle="bold"
-            android:layout_marginTop="5dp"
-            android:textSize="18sp"
-            />
-        <TextView
-            android:id="@+id/desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="blah blah"
-            android:layout_below="@+id/title"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp"
-            />
-        <LinearLayout
-            android:id="@+id/linearlayout_1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@+id/desc"
-            android:layout_marginTop="30dp"
-            >
-            <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:src="@drawable/ic_found"
-                app:backgroundTint="@color/teal_200"
-                android:layout_marginLeft="70dp"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Found"
-                android:textSize="18sp"
-                android:textColor="#000"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/linearlayout_2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@+id/linearlayout_1"
-            android:layout_marginTop="30dp"
-            >
-            <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:src="@drawable/ic_lost"
-                android:layout_marginLeft="70dp"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Lost"
-                android:textSize="18sp"
-                android:textColor="#000"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/linearlayout_4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@+id/linearlayout_2"
-            android:layout_marginTop="30dp"
-            >
-            <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:src="@drawable/ic_setting"
-                android:layout_marginLeft="70dp"
-                />
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Settings"
-                android:textSize="18sp"
-                android:textColor="#000"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/linearlayout_5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@+id/linearlayout_4"
-            android:layout_marginTop="30dp"
-            >
-            <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:src="@drawable/ic_baseline_block_24"
-                android:layout_marginLeft="70dp"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Log out"
-                android:textSize="18sp"
-                android:textColor="#000"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
-                />
-        </LinearLayout>
-    </RelativeLayout>
-
-    <Button
-        android:id="@+id/logoutbutton"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageview_profile"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/ic_launcher_background"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/cameraupload"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="100dp"
-        android:text="LOGOUT"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_alignBottom="@+id/imageview_profile"
+        android:layout_alignEnd="@+id/imageview_profile"
+        android:elevation="1dp"
+        android:background="#FFFFFF"
+        android:src="@drawable/ic_camera"
+        android:tint="#FFEB3B"
+        android:backgroundTint="@color/teal_200"
+        app:tint="@color/white"
+        android:layout_alignRight="@+id/imageview_profile" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Muhil Varsini Srinivasan"
+        android:textColor="#000"
+        android:layout_below="@+id/imageview_profile"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:layout_marginTop="5dp"
+        android:textSize="18sp"
+        />
+    <TextView
+        android:id="@+id/desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="blah blah"
+        android:layout_below="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
         />
 
-</FrameLayout>
+    <LinearLayout
+        android:id="@+id/linearlayout_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/desc"
+        android:layout_marginTop="30dp"
+        >
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_found"
+            android:layout_marginLeft="70dp"
+            app:tint="@color/teal_200"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Found"
+            android:textSize="18sp"
+            android:textColor="#000"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/linearlayout_1"
+        android:layout_marginTop="30dp"
+        >
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_lost"
+            android:layout_marginLeft="70dp"
+            app:tint="@color/teal_200"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lost"
+            android:textSize="18sp"
+            android:textColor="#000"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/linearlayout_2"
+        android:layout_marginTop="30dp"
+        >
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_settings"
+            android:layout_marginLeft="70dp"
+            app:tint="@color/teal_200"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Settings"
+            android:textSize="18sp"
+            android:textColor="#000"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/linearlayout_5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/linearlayout_4"
+        android:layout_marginTop="30dp"
+        >
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_logout"
+            app:tint="@color/teal_200"
+            android:layout_marginLeft="70dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Log out"
+            android:textSize="18sp"
+            android:textColor="#000"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/logoutbutton"
+            />
+    </LinearLayout>
+
+
+</RelativeLayout>

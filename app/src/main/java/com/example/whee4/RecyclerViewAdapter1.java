@@ -82,8 +82,7 @@ public class RecyclerViewAdapter1 extends RecyclerView.Adapter<RecyclerViewAdapt
         public ImageView imageView,circleimage;
         public TextView imageNameTextView,textplace,textdetails,textdate;
         public ConstraintLayout eview;
-        Button arrow;
-        public FloatingActionButton chat;
+        public Button arrow, chat;
 
 
         public ViewHolder(View itemView) {
@@ -96,7 +95,7 @@ public class RecyclerViewAdapter1 extends RecyclerView.Adapter<RecyclerViewAdapt
             textdetails=(TextView) itemView.findViewById(R.id.TextDetails1);
             circleimage=(ImageView) itemView.findViewById(R.id.circleImage1);
             arrow=(Button) itemView.findViewById(R.id.arrowBtn1);
-            chat = (FloatingActionButton) itemView.findViewById(R.id.send_msg1);
+            chat = (Button) itemView.findViewById(R.id.send_msg1);
 
             arrow.setOnClickListener(new View.OnClickListener() {
                 @Override

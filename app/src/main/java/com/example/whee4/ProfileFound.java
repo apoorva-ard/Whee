@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,11 +20,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProfileLost extends AppCompatActivity {
+public class ProfileFound extends AppCompatActivity {
 
     DatabaseReference databaseReference;
     FirebaseUser user;
-
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter ;
 
@@ -34,20 +34,19 @@ public class ProfileLost extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_lost);
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view_ul);
+        setContentView(R.layout.activity_profile_found);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view_uf);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         progressDialog = new ProgressDialog(this);
 
-        progressDialog.setMessage("Loading images From Firebase.");
+        progressDialog.setMessage("Loading Images From Firebase.");
         progressDialog.show();
 
+        databaseReference = FirebaseDatabase.getInstance().getReference("Found");
         user = FirebaseAuth.getInstance().getCurrentUser();
         String userId = user.getUid();
-
-        databaseReference = FirebaseDatabase.getInstance().getReference("Lost");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -59,14 +58,15 @@ public class ProfileLost extends AppCompatActivity {
                         list.add(itemUploadInfo);
                     }
                 }
-                adapter = new RecyclerViewAdapterUL(ProfileLost.this , list);
+
+                adapter = new RecyclerViewAdapterUF(ProfileFound.this , list);
                 recyclerView.setAdapter(adapter);
                 progressDialog.dismiss();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(ProfileLost.this, "Fetching failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileFound.this, "Fetching failed", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
             }
         });

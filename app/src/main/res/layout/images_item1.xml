@@ -70,7 +70,7 @@
                 android:id="@+id/desc1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Name"
+                android:text="Item Name"
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="#8A000000"
                 android:layout_marginStart="12dp"
@@ -78,18 +78,17 @@
                 app:layout_constraintTop_toBottomOf="@+id/ImageNameTextView1"
                 android:layout_marginLeft="12dp" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
+
+            <Button
                 android:id="@+id/send_msg1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="55dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="60dp"
                 android:layout_marginRight="40dp"
-                android:src="@drawable/ic_baseline_chat_24"
-                app:backgroundTint="@color/white"
-                app:layout_constraintBottom_toBottomOf="@+id/view1"
+                android:background="@drawable/ic_baseline_chat_24"
+                app:layout_constraintBottom_toBottomOf="@+id/view"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/view1"
-                app:tint="@color/teal_200" />
+                app:layout_constraintTop_toTopOf="@+id/view1"/>
 
             <Button
                 android:id="@+id/arrowBtn1"
@@ -211,7 +210,7 @@
                     android:id="@+id/detailDesc1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Place"
+                    android:text="Details"
                     android:layout_marginStart="32dp"
                     android:textColor="#8A000000"
                     style="@style/TextAppearance.AppCompat.Body1"

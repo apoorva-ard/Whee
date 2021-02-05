@@ -79,12 +79,12 @@
                    android:layout_marginLeft="12dp" />
 
                <Button
-                   android:id="@+id/send_msg"
+                   android:id="@+id/delete_item"
                    android:layout_width="30dp"
                    android:layout_height="30dp"
                    android:layout_marginEnd="60dp"
                    android:layout_marginRight="40dp"
-                   android:background="@drawable/ic_baseline_chat_24"
+                   android:background="@drawable/ic_delete_forever"
                    app:layout_constraintBottom_toBottomOf="@+id/view"
                    app:layout_constraintEnd_toEndOf="parent"
                    app:layout_constraintTop_toTopOf="@+id/view"/>
