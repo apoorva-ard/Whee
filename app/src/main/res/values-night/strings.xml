@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Whee</string>
+    <string name="chat_fragment">CHAT FRAGMENT</string>
+    <string name="found_fragment">FOUND FRAGMENT</string>
+    <string name="lost_fragment">LOST FRAGMENT</string>
+    <string name="user_fragment">USER FRAGMENT</string>
+    <string name="found_menu">Found</string>
+    <string name="lost_menu">Lost</string>
+    <string name="chat_menu">Chat</string>
+    <string name="user_menu">User</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="chat">chat</string>
+    
+</resources>

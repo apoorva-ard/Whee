@@ -8,15 +8,18 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import  com.example.whee4.UploadFound;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class User extends Fragment implements View.OnClickListener{
 
     View view;
     LinearLayout found, lost, settings, logout;
+    FloatingActionButton camUpload;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -27,7 +30,13 @@ public class User extends Fragment implements View.OnClickListener{
         lost = view.findViewById(R.id.linearlayout_2);
         settings = view.findViewById(R.id.linearlayout_4);
         logout = view.findViewById(R.id.linearlayout_5);
+        camUpload=view.findViewById(R.id.cameraupload);
+        camUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
         found.setOnClickListener(this);
         lost.setOnClickListener(this);
         settings.setOnClickListener(this);

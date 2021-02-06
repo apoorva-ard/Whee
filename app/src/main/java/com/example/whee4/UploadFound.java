@@ -120,7 +120,7 @@ public class UploadFound extends AppCompatActivity {
 
     }
 
-    private void askCameraPermission() {
+   void askCameraPermission() {
         if(ContextCompat.checkSelfPermission(this,Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this,new String[] {Manifest.permission.CAMERA}, CAMERA_PERM_CODE);
         }else {

@@ -45,6 +45,18 @@
             android:maxLines="1"/>
     </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:id="@+id/resetPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Forgot Password???"
+            android:textSize="12sp"
+            android:textColor="@color/black"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="250dp"
+            android:layout_marginTop="250dp"
+            />
+
     <Button
         android:id="@+id/loginbutton"
         android:layout_width="wrap_content"

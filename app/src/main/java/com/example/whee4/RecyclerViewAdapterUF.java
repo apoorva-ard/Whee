@@ -26,7 +26,8 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
-public class RecyclerViewAdapterUF extends RecyclerView.Adapter<RecyclerViewAdapterUF.ViewHolder> {
+public class
+RecyclerViewAdapterUF extends RecyclerView.Adapter<RecyclerViewAdapterUF.ViewHolder> {
 
     Context context;
     List<UploadInfo> MainImageUploadInfoList;
