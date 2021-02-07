@@ -28,21 +28,27 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ProfileSettings extends AppCompatActivity {
-SwitchMaterial switchMat;
-Button changePassword;
-DatabaseReference dbref;
-EditText oldPassword,newPassword;
-FirebaseUser user;
-ImageView editUName;
-ProgressDialog progressDialog;
-TextView delAcc;
-SharedPreferences sharedPreferences=null;
+    SwitchMaterial switchMat;
+    Button changePassword;
+    DatabaseReference dbref;
+    EditText oldPassword,newPassword, uname;
+    FirebaseUser user;
+    ImageView editUName;
+    ProgressDialog progressDialog;
+    TextView delAcc;
+    SharedPreferences sharedPreferences=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +56,84 @@ SharedPreferences sharedPreferences=null;
 
         progressDialog = new ProgressDialog(ProfileSettings.this);
 
+        //change username
+        String currUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users").child(currUser);
+
+        uname = (EditText)findViewById(R.id.uname);
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                UserModel um = snapshot.getValue(UserModel.class);
+                uname.setText(um.getUsername());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        editUName = (ImageView)findViewById(R.id.edit_uname);
+        editUName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final EditText taskEditText = new EditText(ProfileSettings.this);
+                AlertDialog.Builder unameChanger = new AlertDialog.Builder(ProfileSettings.this);
+                unameChanger.setTitle("Change Username");
+                unameChanger.setView(taskEditText);
+                unameChanger.setPositiveButton("Change", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String newUname = String.valueOf(taskEditText.getText());
+                        String regex = "^[A-Za-z]\\w{5,29}$";
+                        Pattern p = Pattern.compile(regex);
+                        Matcher m = p.matcher(newUname);
+                        if(!m.matches()){
+                            Toast.makeText(ProfileSettings.this, "Invalid username! Avoid special characters", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            //change in user db
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users").child(currUser);
+
+                            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists()) {
+                                        UserModel um = dataSnapshot.getValue(UserModel.class);
+                                        String newUname = String.valueOf(taskEditText.getText());
+                                        HashMap<String, String> hashMap = new HashMap<>();
+                                        hashMap.put("id", um.getId());
+                                        hashMap.put("username", newUname);
+                                        hashMap.put("imageURL", um.getImageURL());
+
+                                        ref.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()){
+                                                    uname.setText(newUname);
+                                                    Toast.makeText(ProfileSettings.this, "Username changed successfuly!", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+                    }
+                });
+                unameChanger.setNegativeButton("Cancel", null)
+                        .create().show();
+            }
+        });
 
 
         //change password
@@ -76,9 +160,7 @@ SharedPreferences sharedPreferences=null;
 
 //delete account
         delAcc=(TextView) findViewById(R.id.deleteAccount);
-
         delAcc.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
 

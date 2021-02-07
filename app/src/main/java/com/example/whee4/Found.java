@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -70,6 +71,7 @@ public class Found extends Fragment {
         // The path is already defined in MainActivity.
         databaseReference = FirebaseDatabase.getInstance().getReference("Found");
 
+        String currUser = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
         // Adding Add Value Event Listener to databaseReference.
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -77,21 +79,16 @@ public class Found extends Fragment {
                 list.clear();
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     UploadInfo imageUploadInfo = postSnapshot.getValue(UploadInfo.class);
-                    list.add(imageUploadInfo);
+                    if(!imageUploadInfo.getUserId().equals(currUser))
+                        list.add(imageUploadInfo);
                 }
-
                 adapter = new RecyclerViewAdapter(getContext(), list);
-
-
                 recyclerView.setAdapter(adapter);
-
-                // Hiding the progress dialog.
                 progressDialog.dismiss();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
                 // Hiding the progress dialog.
                 progressDialog.dismiss();
             }

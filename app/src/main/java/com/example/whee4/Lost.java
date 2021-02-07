@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -63,16 +64,16 @@ public class Lost extends Fragment {
         // The path is already defined in MainActivity.
         databaseReference = FirebaseDatabase.getInstance().getReference("Lost");
 
+        String currUser = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
         // Adding Add Value Event Listener to databaseReference.
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 list.clear();
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-
                     UploadInfo imageUploadInfo = postSnapshot.getValue(UploadInfo.class);
-
-                    list.add(imageUploadInfo);
+                    if(!imageUploadInfo.getUserId().equals(currUser))
+                        list.add(imageUploadInfo);
                 }
 
                 adapter = new RecyclerViewAdapter1(getContext(), list);
