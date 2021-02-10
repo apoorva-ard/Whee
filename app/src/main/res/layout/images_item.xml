@@ -202,7 +202,7 @@
                     android:paddingTop="70dp"
                     android:paddingRight="10sp"
                     app:autoSizeTextType="uniform"
-                    app:autoSizeMaxTextSize="50sp"
+                    app:autoSizeMaxTextSize="20sp"
                     app:autoSizeMinTextSize="2sp"
                     app:autoSizeStepGranularity="2sp"
                     app:layout_constraintTop_toTopOf="@id/detail_icon"
