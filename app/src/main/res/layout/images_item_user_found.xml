@@ -200,7 +200,7 @@
                        android:layout_height="wrap_content"
                        android:layout_marginStart="32dp"
                        android:textColor="#000"
-                       android:paddingTop="50dp"
+                       android:paddingTop="70dp"
                        android:paddingRight="10sp"
                        app:autoSizeTextType="uniform"
                        app:autoSizeMaxTextSize="20sp"
