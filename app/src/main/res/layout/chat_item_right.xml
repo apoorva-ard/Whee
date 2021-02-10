@@ -26,7 +26,7 @@
             android:id="@+id/show_message"
             android:textSize="18sp"
             android:textColor="#fff"
-            android:padding="8dp"
+            android:padding="10dp"
             android:layout_alignParentRight="true" />
 
         <TextView

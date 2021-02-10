@@ -48,6 +48,9 @@ public class Found extends Fragment {
     FloatingActionButton fab;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Found");
+
         view = inflater.inflate(R.layout.fragment_found, container, false);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
@@ -71,7 +74,7 @@ public class Found extends Fragment {
         // The path is already defined in MainActivity.
         databaseReference = FirebaseDatabase.getInstance().getReference("Found");
 
-        String currUser = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
+        String currUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
         // Adding Add Value Event Listener to databaseReference.
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override

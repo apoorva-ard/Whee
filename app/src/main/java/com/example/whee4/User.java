@@ -62,6 +62,8 @@ public class User extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Profile");
+
         view = inflater.inflate(R.layout.fragment_user, container, false);
 
         uname = view.findViewById(R.id.title);

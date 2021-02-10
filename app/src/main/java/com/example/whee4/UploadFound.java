@@ -59,6 +59,10 @@ public class UploadFound extends AppCompatActivity {
     FirebaseUser user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        UploadFound.this.setTitle("Upload Found Item");
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_found);
         storageReference = FirebaseStorage.getInstance().getReference("Images");

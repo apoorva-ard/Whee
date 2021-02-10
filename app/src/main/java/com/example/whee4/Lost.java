@@ -39,8 +39,11 @@ public class Lost extends Fragment {
     List<UploadInfo> list = new ArrayList<>();
     View view;
     FloatingActionButton fab;
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Lost");
+
         view = inflater.inflate(R.layout.fragment_lost, container, false);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view1);

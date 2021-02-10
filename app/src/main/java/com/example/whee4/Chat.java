@@ -40,6 +40,9 @@ public class Chat extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Chat");
+
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
 
         recyclerView = view.findViewById(R.id.recycler_view);
@@ -83,8 +86,10 @@ public class Chat extends Fragment {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     UserModel user = snapshot.getValue(UserModel.class);
                     for (Chatlist chatlist : usersList){
-                        if (user.getId().equals(chatlist.getId())){
-                            mUsers.add(user);
+                        if(user.getId()!=null && chatlist.getId()!=null) {
+                            if (user.getId().equals(chatlist.getId())) {
+                                mUsers.add(user);
+                            }
                         }
                     }
                 }

@@ -6,7 +6,7 @@ public class UserModel {
     private String username;
     private String imageURL;
 
-    public UserModel(String id, String username, String imageURL, String status, String search) {
+    public UserModel(String id, String username, String imageURL) {
         this.id = id;
         this.username = username;
         this.imageURL = imageURL;

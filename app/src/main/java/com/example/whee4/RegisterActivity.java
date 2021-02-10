@@ -32,6 +32,11 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        RegisterActivity.this.setTitle("Register");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         setContentView(R.layout.activity_register);
 
         varname=(EditText)findViewById(R.id.name);

@@ -58,6 +58,11 @@ public class UploadLost extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
+        UploadLost.this.setTitle("Upload Lost Item");
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_lost);
         storageReference = FirebaseStorage.getInstance().getReference("Images");

@@ -182,6 +182,7 @@
                    app:layout_constraintStart_toEndOf="@id/DateIcon"
                    app:layout_constraintBottom_toBottomOf="@+id/DateIcon"
                    android:layout_marginLeft="32dp" />
+
                <ImageView
                    android:id="@+id/detail_icon"
                    android:layout_width="30dp"
@@ -199,10 +200,17 @@
                    android:layout_height="wrap_content"
                    android:layout_marginStart="32dp"
                    android:textColor="#000"
-                   style="@style/TextAppearance.AppCompat.Medium"
-                   app:layout_constraintTop_toTopOf="@+id/detail_icon"
+                   android:paddingTop="50dp"
+                   android:paddingRight="10sp"
+                   app:autoSizeTextType="uniform"
+                   app:autoSizeMaxTextSize="20sp"
+                   app:autoSizeMinTextSize="2sp"
+                   app:autoSizeStepGranularity="2sp"
+                   app:layout_constraintTop_toTopOf="@id/detail_icon"
                    app:layout_constraintStart_toEndOf="@id/detail_icon"
+                   style="@style/TextAppearance.AppCompat.Body1"
                    app:layout_constraintBottom_toTopOf="@+id/detailDesc"
+                   app:layout_constraintEnd_toEndOf="parent"
                    android:layout_marginLeft="32dp" />
 
                <TextView

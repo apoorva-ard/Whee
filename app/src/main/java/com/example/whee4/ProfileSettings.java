@@ -39,6 +39,8 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.appcompat.widget.Toolbar;
+
 public class ProfileSettings extends AppCompatActivity {
     SwitchMaterial switchMat;
     Button changePassword;
@@ -52,6 +54,9 @@ public class ProfileSettings extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ProfileSettings.this.setTitle("Settings");
+
         setContentView(R.layout.activity_profile_settings);
 
         progressDialog = new ProgressDialog(ProfileSettings.this);
@@ -163,29 +168,112 @@ public class ProfileSettings extends AppCompatActivity {
         delAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Adding confirmation dialog
+                AlertDialog.Builder deletealert = new AlertDialog.Builder(ProfileSettings.this);
+                deletealert.setTitle("Are you sure?")
+                        .setMessage("Deleteing this account will result in completely removing the account " +
+                                "from the system along with all your uploads.")
+                        .setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                user = FirebaseAuth.getInstance().getCurrentUser();
+                                progressDialog.setTitle("Deleting Account...");
+                                progressDialog.show();
+                                String userId = user.getUid();
+                                user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
 
-                user = FirebaseAuth.getInstance().getCurrentUser();
-                progressDialog.setTitle("Deleting Account...");
-                progressDialog.show();
-                user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            progressDialog.dismiss();;
-                            Toast.makeText(getApplicationContext(), "Acccount Deleted...", Toast.LENGTH_LONG).show();
-                            startActivity(new Intent(ProfileSettings.this, RegisterActivity.class));
-                        }else
-                        {
-                            Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
+                                            dbref = FirebaseDatabase.getInstance().getReference("Found");
 
+                                            dbref.addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                    for (DataSnapshot postSnapshot : snapshot.getChildren()){
+                                                        UploadInfo imageUploadInfo = postSnapshot.getValue(UploadInfo.class);
+                                                        if(imageUploadInfo.getUserId().equals(userId))
+                                                            postSnapshot.getRef().removeValue();
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                }
+                                            });
+
+                                            dbref = FirebaseDatabase.getInstance().getReference("Lost");
+                                            dbref.addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                    for (DataSnapshot postSnapshot : snapshot.getChildren()){
+                                                        UploadInfo itemInfo = postSnapshot.getValue(UploadInfo.class);
+                                                        if(itemInfo.getUserId().equals(userId))
+                                                            postSnapshot.getRef().removeValue();
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                }
+                                            });
+
+                                            dbref = FirebaseDatabase.getInstance().getReference("Chats");
+
+                                            dbref.addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                    for (DataSnapshot postSnapshot : snapshot.getChildren()){
+                                                        ChatModel chatInfo = postSnapshot.getValue(ChatModel.class);
+                                                        if(chatInfo.getSender().equals(userId) || chatInfo.getReceiver().equals(userId))
+                                                            postSnapshot.getRef().removeValue();
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                }
+                                            });
+
+                                            dbref = FirebaseDatabase.getInstance().getReference("Chatlist").child(userId);
+                                            dbref.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    dbref = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+                                                    dbref.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            progressDialog.dismiss();
+                                                            Toast.makeText(getApplicationContext(), "Account Deleted!", Toast.LENGTH_LONG).show();
+                                                            Intent intent = new Intent(ProfileSettings.this, RegisterActivity.class);
+                                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                            startActivity(intent);
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                        }else
+                                        {
+                                            Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        }).show();
             }
         });
 
 
-//night mode
+        //night mode
         switchMat=findViewById(R.id.switchMaterial);
         sharedPreferences=getSharedPreferences("night",0);
         Boolean booleanValue=sharedPreferences.getBoolean("night_mode",true);
@@ -201,7 +289,7 @@ public class ProfileSettings extends AppCompatActivity {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     switchMat.setChecked(true);
                     SharedPreferences.Editor editor=sharedPreferences.edit();
-                    editor.putBoolean("night_mode",false);
+                    editor.putBoolean("night_mode",true);
                     editor.commit();
                     Toast.makeText(getApplicationContext(), "Night Mode Activated", Toast.LENGTH_LONG).show();
                 }

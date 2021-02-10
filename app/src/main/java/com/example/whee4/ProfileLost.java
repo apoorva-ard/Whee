@@ -34,6 +34,9 @@ public class ProfileLost extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ProfileLost.this.setTitle("Lost uploads");
+
         setContentView(R.layout.activity_profile_lost);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_ul);
 

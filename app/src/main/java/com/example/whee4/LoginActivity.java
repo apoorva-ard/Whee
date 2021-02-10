@@ -27,15 +27,21 @@ public class LoginActivity extends AppCompatActivity {
     Button btnlogin;
     FirebaseAuth auth;
     TextView ResetPass;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        LoginActivity.this.setTitle("Login");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         setContentView(R.layout.activity_login);
 
         varemail = findViewById(R.id.email);
         varpassword = findViewById(R.id.password);
         btnlogin = findViewById(R.id.loginbutton);
-ResetPass=(TextView) findViewById(R.id.resetPassword);
+        ResetPass=(TextView) findViewById(R.id.resetPassword);
+
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

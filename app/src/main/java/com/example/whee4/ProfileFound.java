@@ -34,6 +34,9 @@ public class ProfileFound extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ProfileFound.this.setTitle("Found Uploads");
+
         setContentView(R.layout.activity_profile_found);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_uf);
 
