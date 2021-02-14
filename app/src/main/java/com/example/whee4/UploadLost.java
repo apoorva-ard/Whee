@@ -182,16 +182,14 @@ public class UploadLost extends AppCompatActivity {
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
             File photoFile = null;
             try {
                 photoFile = createImageFile();
             } catch (IOException ex) {
 
             }
-            Toast.makeText(getApplicationContext(), "Image ", Toast.LENGTH_LONG).show();
+
             if (photoFile!= null) {
-                Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
                 Uri photoURI = FileProvider.getUriForFile(this,
                         "com.example.android.fileprovider",
                         photoFile);
