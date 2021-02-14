@@ -148,6 +148,25 @@ public class MessageActivity extends AppCompatActivity {
 
             }
         });
+
+        final DatabaseReference chatRef1 = FirebaseDatabase.getInstance().getReference("Chatlist")
+                .child(userid)
+                .child(fuser.getUid());
+
+        chatRef1.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.exists()){
+                    chatRef1.child("id").setValue(fuser.getUid());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     private void readMesagges(final String myid, final String userid, final String imageurl){
