@@ -21,6 +21,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -47,17 +49,27 @@ public class RegisterActivity extends AppCompatActivity {
         btnsignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String txt_username = varname.getText().toString();
                 String txt_email = varemail.getText().toString();
                 String txt_password = varpassword.getText().toString();
-
-                if (TextUtils.isEmpty(txt_username) || TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password)){
-                    Toast.makeText(RegisterActivity.this, "All fileds are required", Toast.LENGTH_SHORT).show();
-                } else if (txt_password.length() < 6 ){
-                    Toast.makeText(RegisterActivity.this, "password must be at least 6 characters", Toast.LENGTH_SHORT).show();
-                } else {
-                    register(txt_username, txt_email, txt_password);
+                String regex = "^[A-Za-z]\\w{5,29}$";
+                Pattern p = Pattern.compile(regex);
+                Matcher m = p.matcher(txt_username);
+                if(!m.matches()){
+                    Toast.makeText(RegisterActivity.this, "Invalid username!Your username should have atleast 5 characters and should not contain any special characters.", Toast.LENGTH_SHORT).show();
                 }
+                else
+                {
+                    if (TextUtils.isEmpty(txt_username) || TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password)){
+                        Toast.makeText(RegisterActivity.this, "All fileds are required", Toast.LENGTH_SHORT).show();
+                    } else if (txt_password.length() < 6 ){
+                        Toast.makeText(RegisterActivity.this, "password must be at least 6 characters", Toast.LENGTH_SHORT).show();
+                    } else {
+                        register(txt_username, txt_email, txt_password);
+                    }
+                }
+
             }
         });
     }

@@ -18,5 +18,19 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="chat">chat</string>
-    
+    <string name="ab_line1">Welcome to Whee!</string>
+    <string name="ab_para1">Whee is the essential finding tool for anyone who has experienced the stress, worry, and inconvenience associated with lost objects. Finding your lost ojects has never been easier.</string>
+    <string name="ab_feat1">Once you register to our app, You’ll see a list of found and lost items. You can see where the item has been found along with other details. </string>
+    <string name="ab_feat2">You can also update the items which you have found or lost.</string>
+    <string name="ab_feat3">You can also chat with the user who uploaded the item to get more details.</string>
+
+    <string name="ab_dev1">Developed by</string>
+    <string name="ab_dev2">Apoorva, Nivethidha, Muhil Varsini,</string>
+    <string name="ab_dev3">Students of PSG College Of Technology,</string>
+    <string name="ab_dev4">Coimbatore, Tamil Nadu - 641004</string>
+
+    <string name="query">For further queries, write to </string>
+    <string name="gmail">lostfound379@gmail.com</string>
+    <string name="thank">Thank you!! </string>
+    <string name="team">- Whee team</string>
 </resources>

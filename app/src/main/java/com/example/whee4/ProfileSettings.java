@@ -50,15 +50,24 @@ public class ProfileSettings extends AppCompatActivity {
     ImageView editUName;
     ProgressDialog progressDialog;
     TextView delAcc;
+    TextView toAbout;
     SharedPreferences sharedPreferences=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
         ProfileSettings.this.setTitle("Settings");
 
         setContentView(R.layout.activity_profile_settings);
 
+        toAbout = (TextView) findViewById(R.id.textView3);
+        toAbout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ProfileSettings.this, about.class));
+            }
+        });
         progressDialog = new ProgressDialog(ProfileSettings.this);
 
         //change username
@@ -97,7 +106,7 @@ public class ProfileSettings extends AppCompatActivity {
                         Pattern p = Pattern.compile(regex);
                         Matcher m = p.matcher(newUname);
                         if(!m.matches()){
-                            Toast.makeText(ProfileSettings.this, "Invalid username! Avoid special characters", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ProfileSettings.this, "Invalid username!Your username should have atleast 5 characters and should not contain any special characters.", Toast.LENGTH_SHORT).show();
                         }
                         else{
                             //change in user db
@@ -154,8 +163,8 @@ public class ProfileSettings extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Enter your current password...",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(newp.length()<=6){
-                    Toast.makeText(getApplicationContext(),"Your password should contain atleast 7 characters..",Toast.LENGTH_SHORT).show();
+                if(newp.length()<6){
+                    Toast.makeText(getApplicationContext(),"Your password should contain atleast 6 characters..",Toast.LENGTH_SHORT).show();
                     return;
                 }
                 updatePassword(oldp,newp);

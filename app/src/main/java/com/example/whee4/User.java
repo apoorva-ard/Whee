@@ -1,7 +1,9 @@
 package com.example.whee4;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.Image;
 import android.net.Uri;
@@ -132,9 +134,24 @@ public class User extends Fragment implements View.OnClickListener{
                 Intent activity_settings  = new Intent(getActivity(), ProfileSettings.class);
                 startActivity(activity_settings);
                 break;
-            case R.id.linearlayout_5:
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getActivity() , StartActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            case R.id.linearlayout_5: {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Logout").setMessage("Are you sure you want to logout?")
+                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                FirebaseAuth.getInstance().signOut();
+                                startActivity(new Intent(getActivity(), StartActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                            }
+                        })
+                        .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        })
+                        .show();
+            }
         }
     }
     private void openImage() {

@@ -10,7 +10,7 @@
         <item name="colorSecondaryVariant">@color/sandal</item>
         <item name="colorOnSecondary">@color/white</item>
 
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorSecondary</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/blacklight</item>
         <item name="android:windowBackground">@color/gray</item>
 
         <item name="fontFamily">@font/jost</item>
