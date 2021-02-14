@@ -9,9 +9,10 @@
         <item name="colorSecondary">@color/peach</item>
         <item name="colorSecondaryVariant">@color/black</item>
         <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/white</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>
         <item name="android:windowBackground">@color/white</item>
+        <item name="fontFamily">@font/jost</item>
     </style>
 </resources>

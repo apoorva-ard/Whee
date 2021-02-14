@@ -93,7 +93,7 @@ public class User extends Fragment implements View.OnClickListener{
                     UserModel um = snapshot.getValue(UserModel.class);
                     uname.setText(um.getUsername());
                     if (um.getImageURL().equals("default")){
-                        dp.setImageResource(R.mipmap.ic_launcher);
+                        dp.setImageResource(R.drawable.ic_baseline_person_24);
                     } else {
                         try {
                             Glide.with(getContext()).load(um.getImageURL()).into(dp);

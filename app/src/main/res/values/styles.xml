@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <style name="MenuStyle" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <item name="android:background">@color/white</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="fontFamily">@font/jost</item>
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/white</item>
     </style>
 </resources>

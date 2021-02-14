@@ -104,7 +104,7 @@ public class MessageActivity extends AppCompatActivity {
                 UserModel user = dataSnapshot.getValue(UserModel.class);
                 username.setText(user.getUsername());
                 if (user.getImageURL().equals("default")){
-                    profile_image.setImageResource(R.mipmap.ic_launcher);
+                    profile_image.setImageResource(R.drawable.ic_baseline_person_24);
                 } else {
                     Glide.with(getApplicationContext()).load(user.getImageURL()).into(profile_image);
                 }
@@ -118,6 +118,7 @@ public class MessageActivity extends AppCompatActivity {
         });
         seenMessage(userid);
     }
+
     private void sendMessage(String sender, final String receiver, String message){
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
@@ -140,28 +141,6 @@ public class MessageActivity extends AppCompatActivity {
                 if (!dataSnapshot.exists()){
                     chatRef.child("id").setValue(userid);
                 }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        final DatabaseReference chatRefReceiver = FirebaseDatabase.getInstance().getReference("Chatlist")
-                .child(userid)
-                .child(fuser.getUid());
-
-        chatRefReceiver.child("id").setValue(fuser.getUid());
-
-        final String msg = message;
-
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                UserModel user = dataSnapshot.getValue(UserModel.class);
-                //notif
             }
 
             @Override

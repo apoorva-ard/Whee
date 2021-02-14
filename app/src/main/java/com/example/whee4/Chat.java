@@ -93,7 +93,7 @@ public class Chat extends Fragment {
                         }
                     }
                 }
-                userAdapter = new UserAdapter(getContext(), mUsers, true);
+                userAdapter = new UserAdapter(getContext(), mUsers);
                 recyclerView.setAdapter(userAdapter);
             }
 
@@ -105,63 +105,3 @@ public class Chat extends Fragment {
     }
 
 }
-
-
-
-/*
-public class Chat extends Fragment {
-
-    private RecyclerView recyclerView;
-
-    private UserAdapter userAdapter;
-    private List<UserModel> mUsers;
-
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_chat, container, false);
-
-        recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        mUsers = new ArrayList<>();
-
-        readUsers();
-
-        return view;
-    }
-
-
-    private void readUsers() {
-
-        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
-
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                mUsers.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    UserModel user = snapshot.getValue(UserModel.class);
-
-                    if (!user.getId().equals(firebaseUser.getUid())) {
-                        mUsers.add(user);
-                    }
-
-                }
-                userAdapter = new UserAdapter(getContext(), mUsers, false);
-                recyclerView.setAdapter(userAdapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-}*/
