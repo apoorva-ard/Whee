@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.example.whee4.R;
-import com.example.whee4.ChatModel;
+import com.example.whee4.Model.ChatModel;
 
 import java.util.List;
 

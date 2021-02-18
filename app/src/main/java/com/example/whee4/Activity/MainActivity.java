@@ -1,21 +1,20 @@
-package com.example.whee4;
+package com.example.whee4.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
+import com.example.whee4.Fragment.Chat;
+import com.example.whee4.Fragment.Found;
+import com.example.whee4.Fragment.Lost;
+import com.example.whee4.Fragment.User;
+import com.example.whee4.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     DatabaseReference reff;
-    //Member member;
 
     BottomNavigationView bottomNavigationView;
     Found foundfrag = new Found();

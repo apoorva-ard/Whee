@@ -1,23 +1,4 @@
-package com.example.whee4;
-
-import android.Manifest;
-import android.app.Activity;
-import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
-import android.content.ContentResolver;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.view.View;
-import android.webkit.MimeTypeMap;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Toast;
+package com.example.whee4.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +6,27 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.app.ProgressDialog;
+import android.content.ContentResolver;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
+
+import android.view.View;
+import android.webkit.MimeTypeMap;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.example.whee4.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,32 +43,36 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class UploadLost extends AppCompatActivity {
-   FloatingActionButton btnbrowse, btnupload,btncamera;
+public class UploadFound extends AppCompatActivity {
+
+    FloatingActionButton btnbrowse, btnupload,btncamera;
     EditText iname,fplace,fdate,fdetails ;
     ImageView imgview;
     Uri FilePathUri;
+
     StorageReference storageReference;
     DatabaseReference databaseReference;
-    int Image_Request_Code = 7;
+    FirebaseUser user;
+
     ProgressDialog progressDialog ;
     private static final int CAMERA_REQUEST_CODE = 102;
     public static final int CAMERA_PERM_CODE = 101;
+    public static final int IMAGE_REQUEST_CODE = 7;
+
     String currentPhotoPath;
     private int mYear,mMonth,mDay;
-    FirebaseUser user;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
 
-        UploadLost.this.setTitle("Upload Lost Item");
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_upload_lost);
+        setContentView(R.layout.activity_upload_found);
+
+        UploadFound.this.setTitle("Upload Found Item");
+
         storageReference = FirebaseStorage.getInstance().getReference("Images");
-        databaseReference = FirebaseDatabase.getInstance().getReference("Lost");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Found");
+
         btnbrowse = (FloatingActionButton) findViewById(R.id.btnbrowse);
         btnupload= (FloatingActionButton) findViewById(R.id.btnupload);
         btncamera=(FloatingActionButton) findViewById(R.id.btncamera);
@@ -75,26 +81,27 @@ public class UploadLost extends AppCompatActivity {
         fdate = (EditText)findViewById(R.id.fdate);
         fdetails = (EditText)findViewById(R.id.fdetails);
         imgview = (ImageView)findViewById(R.id.image_view);
-        progressDialog = new ProgressDialog(UploadLost.this);
+        progressDialog = new ProgressDialog(UploadFound.this);
         user = FirebaseAuth.getInstance().getCurrentUser();
 
         fdate.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+
                 final Calendar c = Calendar.getInstance();
                 mYear = c.get(Calendar.YEAR);
                 mMonth = c.get(Calendar.MONTH);
                 mDay = c.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog dpd = new DatePickerDialog(UploadLost.this,
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year,
-                                                  int month, int day) {
-                                String temp=day + "/" + (month + 1) + "/" + year;
-                                fdate.setText(temp);
-                            }
-                        }, mYear, mMonth, mDay);
+                DatePickerDialog dpd = new DatePickerDialog(UploadFound.this,
+                    new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker view, int year, int month, int day) {
+                            String temp=day + "/" + (month + 1) + "/" + year;
+                            fdate.setText(temp);
+                        }
+                    }, mYear, mMonth, mDay);
+
                 dpd.getDatePicker().setMaxDate(System.currentTimeMillis());
                 dpd.show();
 
@@ -106,17 +113,17 @@ public class UploadLost extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent gallery = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(gallery, Image_Request_Code);
-
+                startActivityForResult(gallery, IMAGE_REQUEST_CODE);
             }
         });
+
         btncamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            askCameraPermission();
-
+                askCameraPermission();
             }
         });
+
         btnupload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,7 +133,7 @@ public class UploadLost extends AppCompatActivity {
 
     }
 
-    private void askCameraPermission() {
+    void askCameraPermission() {
         if(ContextCompat.checkSelfPermission(this,Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this,new String[] {Manifest.permission.CAMERA}, CAMERA_PERM_CODE);
         }else {
@@ -151,7 +158,7 @@ public class UploadLost extends AppCompatActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == Image_Request_Code && resultCode == RESULT_OK && data != null && data.getData() != null) {
+        if (requestCode == IMAGE_REQUEST_CODE && resultCode == RESULT_OK && data != null && data.getData() != null) {
 
             FilePathUri = data.getData();
 
@@ -165,19 +172,15 @@ public class UploadLost extends AppCompatActivity {
         }
         if(requestCode == CAMERA_REQUEST_CODE){
             if(resultCode == Activity.RESULT_OK){
-                File f = new File(currentPhotoPath);
+               File f = new File(currentPhotoPath);
                 imgview.setImageURI(Uri.fromFile(f));
-
 
                 Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
                 FilePathUri = Uri.fromFile(f);
                 mediaScanIntent.setData(FilePathUri);
                 this.sendBroadcast(mediaScanIntent);
             }
-
         }
-
-
     }
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -188,8 +191,7 @@ public class UploadLost extends AppCompatActivity {
             } catch (IOException ex) {
 
             }
-
-            if (photoFile!= null) {
+            if (photoFile != null) {
                 Uri photoURI = FileProvider.getUriForFile(this,
                         "com.example.android.fileprovider",
                         photoFile);
@@ -200,12 +202,11 @@ public class UploadLost extends AppCompatActivity {
     }
 
     public String GetFileExtension(Uri uri) {
-
         ContentResolver contentResolver = getContentResolver();
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri)) ;
-
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
+
 
     public void uploadItem() {
         String itemName = iname.getText().toString().trim();
@@ -214,7 +215,7 @@ public class UploadLost extends AppCompatActivity {
         String itemDetails = fdetails.getText().toString().trim();
         String userId = user.getUid();
 
-        if(itemName.length()==0 || itemPlace.length()==0 || itemDetails.length()==0  || itemDate.length()==0){
+        if(itemName.length()==0 || itemPlace.length()==0 || itemDetails.length()==0 || itemDate.length()==0){
             Toast.makeText(getApplicationContext(), "Fields can't be empty!", Toast.LENGTH_LONG).show();
             return;
         }
@@ -228,6 +229,7 @@ public class UploadLost extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss();
+
                             storageReference2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
@@ -243,6 +245,7 @@ public class UploadLost extends AppCompatActivity {
                                     imgview.setImageResource(android.R.color.transparent);
                                 }
                             });
+
                         }
                     });
         }
@@ -259,8 +262,8 @@ public class UploadLost extends AppCompatActivity {
             imgview.setImageResource(android.R.color.transparent);
         }
 
-    }
 
+    }
 
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -274,4 +277,5 @@ public class UploadLost extends AppCompatActivity {
         currentPhotoPath = image.getAbsolutePath();
         return image;
     }
+
 }

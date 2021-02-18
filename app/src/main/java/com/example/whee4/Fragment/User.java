@@ -1,11 +1,8 @@
-package com.example.whee4;
+package com.example.whee4.Fragment;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -16,14 +13,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import  com.example.whee4.UploadFound;
+import com.example.whee4.Activity.MainActivity;
+import com.example.whee4.Activity.ProfileFound;
+import com.example.whee4.Activity.ProfileLost;
+import com.example.whee4.Activity.ProfileSettings;
+import com.example.whee4.R;
+import com.example.whee4.Activity.StartActivity;
+import com.example.whee4.Model.UserModel;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -61,8 +63,7 @@ public class User extends Fragment implements View.OnClickListener{
     StorageReference storageReference;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         ((MainActivity)getActivity()).getSupportActionBar().setTitle("Profile");
 
@@ -100,9 +101,7 @@ public class User extends Fragment implements View.OnClickListener{
                         try {
                             Glide.with(getContext()).load(um.getImageURL()).into(dp);
                         }
-                        catch (Exception e){
-                            //Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
-                        }
+                        catch (Exception e){}
                     }
                 }
             }
@@ -134,24 +133,9 @@ public class User extends Fragment implements View.OnClickListener{
                 Intent activity_settings  = new Intent(getActivity(), ProfileSettings.class);
                 startActivity(activity_settings);
                 break;
-            case R.id.linearlayout_5: {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Logout").setMessage("Are you sure you want to logout?")
-                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                FirebaseAuth.getInstance().signOut();
-                                startActivity(new Intent(getActivity(), StartActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                            }
-                        })
-                        .setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
-                            }
-                        })
-                        .show();
-            }
+            case R.id.linearlayout_5:
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getActivity() , StartActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
         }
     }
     private void openImage() {
@@ -186,7 +170,8 @@ public class User extends Fragment implements View.OnClickListener{
 
                     return  fileReference.getDownloadUrl();
                 }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            });
+            uploadTask.addOnCompleteListener(new OnCompleteListener<Uri>() {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
                     if (task.isSuccessful()){

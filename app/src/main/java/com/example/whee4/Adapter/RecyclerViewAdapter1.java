@@ -1,16 +1,13 @@
-package com.example.whee4;
+package com.example.whee4.Adapter;
 
 import android.content.Context;
 
 import android.content.Intent;
-import android.icu.text.Transliterator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,33 +16,31 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.whee4.Activity.MessageActivity;
+import com.example.whee4.R;
+import com.example.whee4.Activity.UploadInfo;
 
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class RecyclerViewAdapter1 extends RecyclerView.Adapter<RecyclerViewAdapter1.ViewHolder> {
 
     Context context;
     List<UploadInfo> MainImageUploadInfoList;
 
-    public RecyclerViewAdapter(Context context, List<UploadInfo> TempList) {
+    public RecyclerViewAdapter1(Context context, List<UploadInfo> TempList) {
         this.MainImageUploadInfoList = TempList;
         this.context = context;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.images_item, parent, false);
-
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.images_item1, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
-
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
         UploadInfo uploadInfo = MainImageUploadInfoList.get(position);
 
         holder.imageNameTextView.setText(uploadInfo.getImageName());
@@ -56,9 +51,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         Glide.with(context).load(uploadInfo.getImageURL()).into(holder.imageView);
         Glide.with(context).load(uploadInfo.getImageURL()).into(holder.circleimage);
         boolean isExpandable=MainImageUploadInfoList.get(position).isExpandable();
-
         holder.eview.setVisibility(isExpandable?View.VISIBLE:View.GONE);
-
         holder.chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,15 +83,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public ViewHolder(View itemView) {
             super(itemView);
-            imageView = (ImageView) itemView.findViewById(R.id.imageView);
-            imageNameTextView = (TextView) itemView.findViewById(R.id.ImageNameTextView);
-            textplace=(TextView) itemView.findViewById(R.id.TextPlace);
-            textdate=(TextView) itemView.findViewById(R.id.TextDate);
-            eview=(ConstraintLayout) itemView.findViewById(R.id.expandableView) ;
-            textdetails=(TextView) itemView.findViewById(R.id.TextDetails);
-            circleimage=(ImageView) itemView.findViewById(R.id.circleImage);
-            arrow=(Button) itemView.findViewById(R.id.arrowBtn);
-            chat = (Button) itemView.findViewById(R.id.send_msg);
+            imageView = (ImageView) itemView.findViewById(R.id.imageView1);
+            imageNameTextView = (TextView) itemView.findViewById(R.id.ImageNameTextView1);
+            textplace=(TextView) itemView.findViewById(R.id.TextPlace1);
+            textdate=(TextView) itemView.findViewById(R.id.TextDate1);
+            eview=(ConstraintLayout) itemView.findViewById(R.id.expandableView1) ;
+            textdetails=(TextView) itemView.findViewById(R.id.TextDetails1);
+            circleimage=(ImageView) itemView.findViewById(R.id.circleImage1);
+            arrow=(Button) itemView.findViewById(R.id.arrowBtn1);
+            chat = (Button) itemView.findViewById(R.id.send_msg1);
 
             arrow.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -106,12 +99,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     UploadInfo uploadInfo=MainImageUploadInfoList.get(getAdapterPosition());
                     uploadInfo.setExpandable(!uploadInfo.isExpandable());
                     notifyItemChanged(getAdapterPosition());
-                    if(eview.getVisibility()==View.GONE)
-                    {
+                    if(eview.getVisibility()==View.GONE){
                         arrow.setBackgroundResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
-                    }
-                    else
-                    {
+                    }else{
                         arrow.setBackgroundResource(R.drawable.ic_baseline_keyboard_arrow_up_24);
                     }
                 }

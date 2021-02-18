@@ -1,4 +1,4 @@
-package com.example.whee4;
+package com.example.whee4.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -19,6 +19,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.whee4.Model.ChatModel;
+import com.example.whee4.R;
+import com.example.whee4.Model.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,14 +35,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import androidx.appcompat.widget.Toolbar;
 
 public class ProfileSettings extends AppCompatActivity {
     SwitchMaterial switchMat;
@@ -49,8 +49,7 @@ public class ProfileSettings extends AppCompatActivity {
     FirebaseUser user;
     ImageView editUName;
     ProgressDialog progressDialog;
-    TextView delAcc;
-    TextView toAbout;
+    TextView toAbout, delAcc;
     SharedPreferences sharedPreferences=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +69,6 @@ public class ProfileSettings extends AppCompatActivity {
         });
         progressDialog = new ProgressDialog(ProfileSettings.this);
 
-        //change username
         String currUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users").child(currUser);
 
@@ -109,7 +107,6 @@ public class ProfileSettings extends AppCompatActivity {
                             Toast.makeText(ProfileSettings.this, "Invalid username!Your username should have atleast 5 characters and should not contain any special characters.", Toast.LENGTH_SHORT).show();
                         }
                         else{
-                            //change in user db
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users").child(currUser);
 
@@ -150,7 +147,6 @@ public class ProfileSettings extends AppCompatActivity {
         });
 
 
-        //change password
         changePassword=(Button)findViewById(R.id.changePass);
         oldPassword=(EditText)findViewById(R.id.oldpassword);
         newPassword=(EditText)findViewById(R.id.newpassword) ;
@@ -172,12 +168,19 @@ public class ProfileSettings extends AppCompatActivity {
         });
 
 
-//delete account
+        toAbout = (TextView) findViewById(R.id.textView3);
+        toAbout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+
         delAcc=(TextView) findViewById(R.id.deleteAccount);
         delAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Adding confirmation dialog
                 AlertDialog.Builder deletealert = new AlertDialog.Builder(ProfileSettings.this);
                 deletealert.setTitle("Are you sure?")
                         .setMessage("Deleteing this account will result in completely removing the account " +
@@ -282,7 +285,7 @@ public class ProfileSettings extends AppCompatActivity {
         });
 
 
-        //night mode
+
         switchMat=findViewById(R.id.switchMaterial);
         sharedPreferences=getSharedPreferences("night",0);
         Boolean booleanValue=sharedPreferences.getBoolean("night_mode",true);
@@ -312,8 +315,8 @@ public class ProfileSettings extends AppCompatActivity {
                 }
             }
         });
-
     }
+
 
     private void updatePassword(String oldp, String newp) {
         user = FirebaseAuth.getInstance().getCurrentUser();

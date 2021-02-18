@@ -1,4 +1,4 @@
-package com.example.whee4;
+package com.example.whee4.Model;
 
 public class Chatlist {
     public String id;
@@ -7,8 +7,7 @@ public class Chatlist {
         this.id = id;
     }
 
-    public Chatlist() {
-    }
+    public Chatlist() {}
 
     public String getId() {
         return id;

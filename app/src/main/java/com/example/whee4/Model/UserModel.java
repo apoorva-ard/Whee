@@ -1,4 +1,4 @@
-package com.example.whee4;
+package com.example.whee4.Model;
 
 public class UserModel {
 
@@ -12,9 +12,7 @@ public class UserModel {
         this.imageURL = imageURL;
     }
 
-    public UserModel() {
-
-    }
+    public UserModel() {}
 
     public String getId() {
         return id;

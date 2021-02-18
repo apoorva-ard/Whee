@@ -1,4 +1,4 @@
-package com.example.whee4;
+package com.example.whee4.Activity;
 
 public class UploadInfo {
     public String itemName;

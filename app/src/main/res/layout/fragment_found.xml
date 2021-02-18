@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:visibility="visible"
-    tools:context=".Found"
+    tools:context=".Fragment.Found"
     tools:visibility="visible">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -15,9 +15,8 @@
        android:layout_height="match_parent">
    </androidx.recyclerview.widget.RecyclerView>
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab1"

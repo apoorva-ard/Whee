@@ -1,11 +1,9 @@
-package com.example.whee4;
+package com.example.whee4.Fragment;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,10 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.Button;
-import android.widget.Toast;
 
+import com.example.whee4.Adapter.RecyclerViewAdapter;
+import com.example.whee4.Activity.MainActivity;
+import com.example.whee4.R;
+import com.example.whee4.Activity.UploadFound;
+import com.example.whee4.Activity.UploadInfo;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -31,51 +31,33 @@ import java.util.List;
 public class Found extends Fragment {
     DatabaseReference databaseReference;
 
-    // Creating RecyclerView.
     RecyclerView recyclerView;
-
-    // Creating RecyclerView.Adapter.
-    RecyclerView.Adapter adapter ;
-
-    // Creating Progress dialog
+    RecyclerView.Adapter adapter;
     ProgressDialog progressDialog;
 
-    // Creating List of ImageUploadInfo class.
     List<UploadInfo> list = new ArrayList<>();
-
 
     View view;
     FloatingActionButton fab;
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         ((MainActivity)getActivity()).getSupportActionBar().setTitle("Found");
 
         view = inflater.inflate(R.layout.fragment_found, container, false);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-
-        // Setting RecyclerView size true.
         recyclerView.setHasFixedSize(true);
 
-        // Setting RecyclerView layout as LinearLayout.
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        // Assign activity this to progress dialog.
         progressDialog = new ProgressDialog(getActivity());
-
-        // Setting up message in Progress dialog.
         progressDialog.setMessage("Loading Images From Firebase.");
-
-        // Showing progress dialog.
         progressDialog.show();
 
-        // Setting up Firebase image upload folder path in databaseReference.
-        // The path is already defined in MainActivity.
         databaseReference = FirebaseDatabase.getInstance().getReference("Found");
 
         String currUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        // Adding Add Value Event Listener to databaseReference.
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -92,7 +74,6 @@ public class Found extends Fragment {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // Hiding the progress dialog.
                 progressDialog.dismiss();
             }
         });

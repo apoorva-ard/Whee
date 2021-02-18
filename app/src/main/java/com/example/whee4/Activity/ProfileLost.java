@@ -1,4 +1,4 @@
-package com.example.whee4;
+package com.example.whee4.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -6,9 +6,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
+import com.example.whee4.Adapter.RecyclerViewAdapterUL;
+import com.example.whee4.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -20,10 +21,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProfileFound extends AppCompatActivity {
+public class ProfileLost extends AppCompatActivity {
 
     DatabaseReference databaseReference;
     FirebaseUser user;
+
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter ;
 
@@ -35,21 +37,22 @@ public class ProfileFound extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ProfileFound.this.setTitle("Found Uploads");
+        ProfileLost.this.setTitle("Lost uploads");
 
-        setContentView(R.layout.activity_profile_found);
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view_uf);
+        setContentView(R.layout.activity_profile_lost);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view_ul);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         progressDialog = new ProgressDialog(this);
 
-        progressDialog.setMessage("Loading Images From Firebase.");
+        progressDialog.setMessage("Loading images From Firebase.");
         progressDialog.show();
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Found");
         user = FirebaseAuth.getInstance().getCurrentUser();
         String userId = user.getUid();
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Lost");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -61,15 +64,14 @@ public class ProfileFound extends AppCompatActivity {
                         list.add(itemUploadInfo);
                     }
                 }
-
-                adapter = new RecyclerViewAdapterUF(ProfileFound.this , list);
+                adapter = new RecyclerViewAdapterUL(ProfileLost.this , list);
                 recyclerView.setAdapter(adapter);
                 progressDialog.dismiss();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(ProfileFound.this, "Fetching failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileLost.this, "Fetching failed", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
             }
         });

@@ -1,4 +1,4 @@
-package com.example.whee4;
+package com.example.whee4.Model;
 public class ChatModel {
 
     private String sender;
@@ -13,8 +13,7 @@ public class ChatModel {
         this.isseen = isseen;
     }
 
-    public ChatModel() {
-    }
+    public ChatModel() {}
 
     public String getSender() {
         return sender;

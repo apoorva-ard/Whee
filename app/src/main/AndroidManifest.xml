@@ -14,17 +14,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Whee4">
-        <activity android:name=".about"></activity>
+        <activity android:name=".Activity.about"></activity>
         <activity
-            android:name=".MessageActivity"
+            android:name=".Activity.MessageActivity"
             android:theme="@style/MenuStyle" />
         <activity
-            android:name=".UploadFound"
-            android:parentActivityName=".MainActivity" />
+            android:name=".Activity.UploadFound"
+            android:parentActivityName=".Activity.MainActivity" />
         <activity
-            android:name=".UploadLost"
-            android:parentActivityName=".MainActivity" />
-        <activity android:name=".StartActivity">
+            android:name=".Activity.UploadLost"
+            android:parentActivityName=".Activity.MainActivity" />
+        <activity android:name=".Activity.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,17 +32,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RegisterActivity"
-            android:parentActivityName=".StartActivity" />
+            android:name=".Activity.RegisterActivity"
+            android:parentActivityName=".Activity.StartActivity" />
         <activity
-            android:name=".LoginActivity"
-            android:parentActivityName=".StartActivity" />
-        <activity android:name=".MainActivity" />
+            android:name=".Activity.LoginActivity"
+            android:parentActivityName=".Activity.StartActivity" />
+        <activity android:name=".Activity.MainActivity" />
         <activity
-            android:name=".ProfileSettings"
+            android:name=".Activity.ProfileSettings"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".ProfileLost" />
-        <activity android:name=".ProfileFound" />
+        <activity android:name=".Activity.ProfileLost" />
+        <activity android:name=".Activity.ProfileFound" />
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.android.fileprovider"

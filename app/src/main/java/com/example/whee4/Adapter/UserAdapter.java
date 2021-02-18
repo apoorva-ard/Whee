@@ -11,10 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
-import com.example.whee4.ChatModel;
-import com.example.whee4.MessageActivity;
+import com.example.whee4.Model.ChatModel;
+import com.example.whee4.Activity.MessageActivity;
 import com.example.whee4.R;
-import com.example.whee4.UserModel;
+import com.example.whee4.Model.UserModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -81,8 +81,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         public TextView newMsg;
 
         public ViewHolder(View itemView) {
-
             super(itemView);
+
             username = itemView.findViewById(R.id.username);
             profile_image = itemView.findViewById(R.id.profile_image);
             newMsg = itemView.findViewById(R.id.newMsg);

@@ -1,9 +1,8 @@
-package com.example.whee4;
+package com.example.whee4.Adapter;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +16,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.whee4.R;
+import com.example.whee4.Activity.UploadInfo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -26,15 +27,14 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
-public class
-RecyclerViewAdapterUF extends RecyclerView.Adapter<RecyclerViewAdapterUF.ViewHolder> {
+public class RecyclerViewAdapterUL extends RecyclerView.Adapter<RecyclerViewAdapterUL.ViewHolder> {
 
     Context context;
     List<UploadInfo> MainImageUploadInfoList;
     FirebaseStorage storage;
     DatabaseReference databaseReference;
 
-    public RecyclerViewAdapterUF(Context context, List<UploadInfo> TempList) {
+    public RecyclerViewAdapterUL(Context context, List<UploadInfo> TempList) {
         this.MainImageUploadInfoList = TempList;
         this.context = context;
     }
@@ -42,7 +42,7 @@ RecyclerViewAdapterUF extends RecyclerView.Adapter<RecyclerViewAdapterUF.ViewHol
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.images_item_user_found, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.images_item_user_lost, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -52,18 +52,18 @@ RecyclerViewAdapterUF extends RecyclerView.Adapter<RecyclerViewAdapterUF.ViewHol
         UploadInfo uploadInfo = MainImageUploadInfoList.get(position);
 
         holder.imageNameTextView.setText(uploadInfo.getImageName());
+
         holder.textplace.setText(uploadInfo.getPlace());
         holder.textdate.setText(uploadInfo.getDate());
         holder.textdetails.setText(uploadInfo.getDetails());
         Glide.with(context).load(uploadInfo.getImageURL()).into(holder.imageView);
         Glide.with(context).load(uploadInfo.getImageURL()).into(holder.circleimage);
-
         boolean isExpandable=MainImageUploadInfoList.get(position).isExpandable();
 
-        holder.eview.setVisibility(isExpandable?View.VISIBLE:View.GONE);
-
         storage = FirebaseStorage.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference("Found");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Lost");
+
+        holder.eview.setVisibility(isExpandable?View.VISIBLE:View.GONE);
 
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +74,7 @@ RecyclerViewAdapterUF extends RecyclerView.Adapter<RecyclerViewAdapterUF.ViewHol
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+
                         String imgUrl = uploadInfo.getImageURL();
                         String defUrl = "https://firebasestorage.googleapis.com/v0/b/whee-c564b.appspot.com/o/Images%2Fdefault.png?alt=media&token=213d550e-5d70-43b6-968e-0a1f51357be9";
                         String id = uploadInfo.getKey();
@@ -129,7 +130,7 @@ RecyclerViewAdapterUF extends RecyclerView.Adapter<RecyclerViewAdapterUF.ViewHol
             imageNameTextView = (TextView) itemView.findViewById(R.id.ImageNameTextView);
             textplace=(TextView) itemView.findViewById(R.id.TextPlace);
             textdate=(TextView) itemView.findViewById(R.id.TextDate);
-            eview=(ConstraintLayout) itemView.findViewById(R.id.expandableView) ;
+            eview=(ConstraintLayout) itemView.findViewById(R.id.expandableView);
             textdetails=(TextView) itemView.findViewById(R.id.TextDetails);
             circleimage=(ImageView) itemView.findViewById(R.id.circleImage);
             arrow=(Button) itemView.findViewById(R.id.arrowBtn);
@@ -141,17 +142,14 @@ RecyclerViewAdapterUF extends RecyclerView.Adapter<RecyclerViewAdapterUF.ViewHol
                     UploadInfo uploadInfo = MainImageUploadInfoList.get(getAdapterPosition());
                     uploadInfo.setExpandable(!uploadInfo.isExpandable());
                     notifyItemChanged(getAdapterPosition());
-                    if(eview.getVisibility()==View.GONE)
-                    {
+                    if(eview.getVisibility()==View.GONE){
                         arrow.setBackgroundResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
                     }
-                    else
-                    {
+                    else{
                         arrow.setBackgroundResource(R.drawable.ic_baseline_keyboard_arrow_up_24);
                     }
                 }
             });
-
         }
     }
 }
